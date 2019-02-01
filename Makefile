@@ -14,5 +14,18 @@ install: build  ## Install cloudamqp provider into terraform plugin directory
 init: install  ## Run terraform init for local testing
 	terraform init
 
+plan: init
+	CLOUDKARAFKA_APIKEY="1" terraform plan
+
+apply: init
+	CLOUDKARAFKA_APIKEY="1" TF_LOG="DEBUG" terraform apply -auto-approve
+
+destroy: init
+	CLOUDKARAFKA_APIKEY="1" TF_LOG="DEBUG" terraform destroy
+
+import: init
+	CLOUDKARAFKA_APIKEY="1" TF_LOG="DEBUG" terraform import cloudkarafka_instance.kafka_bat 1
+
+
 .PHONY: help build install init
 .DEFAULT_GOAL := help
